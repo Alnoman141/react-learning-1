@@ -2,22 +2,24 @@ import React from 'react';
 
 class Button extends React.Component {
     shouldComponentUpdate(nextProps) {
-        const { change: currentChnage, msg: currentMsg } = this.props;
-        const { change: nextChnage, msg: nextMsg } = nextProps;
+        const { change: currentChnage, locale: currentLocale } = this.props;
+        const { change: nextChnage, locale: nextLocale } = nextProps;
 
-        if (currentChnage === nextChnage && currentMsg === nextMsg) {
+        if (currentChnage === nextChnage && currentLocale === nextLocale) {
             return false;
         }
         return true;
     }
 
     render() {
-        console.log('button component renders');
-        const { change, msg } = this.props;
+        const { change, locale, show } = this.props;
         return (
-            <button type="button" onClick={() => change(msg)}>
-                Click me
-            </button>
+            <div>
+                <button type="button" onClick={() => change(locale)}>
+                    Click Me
+                </button>
+                {show && <p>Hello</p>}
+            </div>
         );
     }
 }

@@ -2,13 +2,13 @@ import React from 'react';
 import Button from './Button';
 
 class Clock extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { date: new Date() };
-        // this.handleClick = this.handleClick.bind(this);
-    }
+    // constructor(props) {
+    //     super(props);
+    //     this.state = { date: new Date() };
+    //     // this.handleClick = this.handleClick.bind(this);
+    // }
 
-    // state = { date: new Date() };
+    state = { date: new Date(), locale: 'bn-BD' };
 
     componentDidMount() {
         this.clockTimer = setInterval(() => {
@@ -20,9 +20,10 @@ class Clock extends React.Component {
         clearInterval(this.clockTimer);
     }
 
-    handleClick = (msg) => {
-        clearInterval(this.clockTimer);
-        console.log(msg);
+    handleClick = (locale) => {
+        this.setState({
+            locale,
+        });
     };
 
     tick() {
@@ -32,17 +33,24 @@ class Clock extends React.Component {
     }
 
     render() {
-        const { locale } = this.props;
-        const { date } = this.state;
-        console.log('clock component renders');
+        // const { locale } = this.props;
+        const { date, locale } = this.state;
+        // let button;
+        // if (locale === 'bn-BD') {
+        //     button = <Button change={this.handleClick} locale="en-US" />;
+        // } else {
+        //     button = <Button change={this.handleClick} locale="bn-BD" />;
+        // }
         return (
             <div>
                 <h1 className="heading">
                     <span className="span">{date.toLocaleTimeString(locale)}</span>
                 </h1>
-                <Button change={this.handleClick} msg="I have clicked">
-                    Click me
-                </Button>
+                {locale === 'bn-BD' ? (
+                    <Button change={this.handleClick} show={false} locale="en-US" />
+                ) : (
+                    <Button change={this.handleClick} show locale="bn-BD" />
+                )}
             </div>
         );
     }
